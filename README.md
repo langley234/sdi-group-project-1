@@ -1,3 +1,11 @@
+# To-do List for Wednesday, August 4, 2021
+
+- End result expected today
+- Tasks completed
+- Ne
+
+
+___________________________________________________________________________________________________________________________________________________________________________
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
