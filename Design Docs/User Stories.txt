@@ -1,0 +1,69 @@
+http://www.dnd5eapi.co/
+
+As Some-User...
+
+When I...
+
+So That I...
+
+1) As someone who has never played before, when I'm creating a character, I want the app to guide my choices so that I don't have to read a bunch of books to know what to do.
+
+2) As a guy who hates the Internet and hidden folders called %appdata%, when I'm finished creating a character, I want to be able to save it on my personal device wherever I choose for later, so that I can take it wherever I go.
+
+3) As a devout Christian mother of three, when my kids are away, I want to be able to load up my childrens' characters, so that I know they're not worshipping the Devil.
+
+4) As a Fighter player, when I view my character data, I want to see how my armor effects my defense stat, so that I can see how much of an idiot I can be, wading into a group of dragons.
+
+5) As a Dwarf character, when I vew my character data, I want to see what weapons I can use based on my character's attributes, so that I can more easily create a battle-axe wielding drunken angry dwarf.
+
+6) As a fella who likes a good backstory, I want my characters background info to be displayed in the character data sheet, so that I don't have to remember and everyone will know how cool my character is.
+
+7) As a non-art-inclined individual who happens to be a mid-30's fella who cannot draw, when I'm creating my character, I want there to be a plethora of choices to use as images to depict my character, so that I can conceal the fact that I cannot draw.
+
+8) As a spell caster , when I view my character data, I want to see what spells or miracles I can cast, so that I do not look stupid when I try to cast the wrong spell or miracle.
+
+9) As a fella who has trouble remembering things, when I view my character information, I want to be able to store information about the last session, so that I don't have to remember myself.
+
+10) As a Barbarian player, when I view my character data, I want to see how much loot I've looted, cuz' Barbarians loot things and that's cool.
+
+_____________________________________________________________________MVP GOALS____________________________________________________________________________
+
+
+11) As a woman with drawing acumen, when I am creating my character, I want to be able to draw and upload a picture of my character to my character data sheet, so that I can show everyone that I can draw.
+
+
+12) As an alpha Chad, when I'm creating a character, I want to be able to specify my character's diet and training regiment, and I want everyone to be able to see that, so that everyone can know I jacked my character is.
+
+13) As a regular joe six-pack, when I'm playing, I want to be able to update stats that can change during combat with one hand, and free a hand up for drinkin' mah beer.
+
+14) As an uber-DnD'er, when I'm playing, I like to be able to add attributes for home-brew purposes, so that I can create a unique game experience.
+
+15) As a Bard player, when I view my character data, I want to see how my buffs effect my character and my team-mates, so that I can know how to more effectively bard.
+
+16) As a dude who likes the Witcher, when I'm creating a character, I want to know how best to make a class resembling a Witcher, so that I can role play as Henry Cavill
+
+17) As a Sorcerer player, when I view my character data, I want to see how many times I can cast my spells until my character has rested, so that I can better plan the next encounter.
+
+18) As a Monk player, when I view my character data, I want to see how my clothing effects my character's outward appearance, so that I can better role play a raggidy monk.
+
+19) As a Dragonborn character, when I view my character data, I want to see which dragon fire I can use, so that I can play gooder.
+
+20) As an Orc character, when I view my character data, I want to see my Constitution so that I can know how robust my character is.
+
+21) As a Necromancer, when I view my character data, I want to see how many minions I can raise, so that I can Warlock to the best of my ability.
+
+22) As a street urchin, when I view my character information, I want to be able to see what my rogue has stolen, so that I can better role play as a thieving rogue.
+
+23) As a Fighter player, when I view my character info, I want to be able to display my skills, so that my character can pass out so that I can go use the bathroom when an encounter goes on too long.
+
+
+
+
+
+21) As a weeb, when I'm creating a character, I want to be able to create a character just like One Punch Man, so that I can live out my fantasy of being One Punch Dude.
+
+22) As the DM's girlfriend, when I'm choosing against the better judgement of my teammates to draw from the Deck of Many Things, I want the effects to be known by all of those in my party, so that I can know how much hate is coming my way.
+
+
+
+24) As a sweaty gamer fella, when I'm playing, I want to know the most optimal option for the scenario I am in, so that I can avoid making a sub-optimal decision regarding a fun game.

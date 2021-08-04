@@ -9,6 +9,12 @@ import {
   useHistory
 } from "react-router-dom";
 import React from 'react';
+import CharacterCreation from './Components/CharacterCreation';
+import Navbar from './Components/NavBar'
+import RaceSelector from './Components/RaceSelector';
+import IconSelector from './Components/IconSelector';
+import ClassSelector from './Components/ClassSelector';
+import { Icon } from '@material-ui/core';
 
 class App extends React.Component 
 {
@@ -17,14 +23,22 @@ class App extends React.Component
     super(props);
   }
 
-  render()
-  {
+  render() {
     return (
       <Router>
         <Switch>
+          <Route path="/class_selection">
+            <ClassSelector />
+          </Route>
+          <Route path="/icon_selection">
+            <IconSelector />
+          </Route>
+          <Route path="/race_selection">
+            <RaceSelector />
+          </Route>
           <Route path="/">
             <div className="App">
-              Let's get to work people...
+              <CharacterCreation />
             </div>
           </Route>
         </Switch>
