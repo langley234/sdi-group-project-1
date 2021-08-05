@@ -14,6 +14,8 @@ import Navbar from './Components/NavBar'
 import RaceSelector from './Components/RaceSelector';
 import IconSelector from './Components/IconSelector';
 import ClassSelector from './Components/ClassSelector';
+import Class from './Components/Class';
+
 import { Icon } from '@material-ui/core';
 
 class App extends React.Component 
@@ -27,6 +29,9 @@ class App extends React.Component
     return (
       <Router>
         <Switch>
+          <Route path="/class_selection/class">
+            <Classes />
+          </Route>
           <Route path="/class_selection">
             <ClassSelector />
           </Route>
@@ -48,4 +53,25 @@ class App extends React.Component
   
 }
 
+function Classes() {
+  let match = useRouteMatch();
+
+  return (
+    <div>
+      <Switch>
+        <Route path={`${match.path}/:className`}>
+          <RouteClass />
+        </Route>
+      </Switch>
+    </div>
+  );
+}
+
+function RouteClass() {
+  console.log('ROUTING');
+  let { className } = useParams();
+  console.log('CLASS NAME: ', className);
+  return <Class name={className}/>
+
+}
 export default App;

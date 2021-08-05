@@ -1,10 +1,15 @@
 import React from 'react';
+import Class from './Class';
+import {
+    Link,
+  } from "react-router-dom";
 
 class ClassSelector extends React.Component
 {
     constructor(props)
     {
         super(props);
+
         this.state = {
             isLoaded: false,
             data: null,
@@ -19,48 +24,58 @@ class ClassSelector extends React.Component
         fetch("https://www.dnd5eapi.co/api/classes")
             .then(res => res.json())
             .then((result) => {
-                Promise.all(
-                    result.results.map((item) => {
-                        console.log('promising');
-                        fetch(`https://www.dnd5eapi.co${item.url}`)
-                            .then(res => res.json())
-                            .then((result) => {
-                                this.classes.push(result);
-                            })
+                if (result.error) {
+                    this.setState({
+                        isLoaded: true,
+                        error: { alert: 'Invalid fetch call (bad url or api issue)', status: true }
                     })
-                );
-            })
-            .then(() => {
-                console.log("DONE");
-                console.log('array ', this.classes);
-                this.setState({
-                    isLoaded: true,
-                    data: this.classes
-                })
+                } else {
+                    if (Array.isArray(result.results)) {
+                        Promise.all(
+                            result.results.map((item) => {
+                                return fetch(`https://www.dnd5eapi.co${item.url}`)
+                                    .then(res => res.json())
+                                    .then((result) => {
+                                        this.classes.push(result);
+                                    })
+                            })
+                        )
+                            .then(() => {
+                                this.setState({
+                                    isLoaded: true,
+                                    data: this.classes
+                                })
+                            })
+                    } else {
+                        this.setState({
+                            isLoaded: true,
+                            error: { alert: 'Data retrieved from the api is not valid and could not be processed', status: true }
+                        })
+                    }
+                }
             },
                 (error) => {
                     this.setState({
                         isLoaded: false,
                         error: { alert: 'Error fetching class data', status: true }
                     })
-                })
+                }
+            )
     }
 
-    render()
-    {
+    render() {
         return (
             <div>
                 {
-                    this.state.isLoaded ?
-                        <ul>
-                            <h1>Done</h1>
-                            {this.state.data.map((item) => {
-                                return <li>{`say something dammit`}</li>
-                            })}
-                        </ul> :
-                        <div>
-                            <h1>Loading</h1>
-                        </div>
+                    !this.state.isLoaded ?
+                        <h1>Loading</h1> :
+                        this.state.error.status ?
+                            <div>{`Something bad happened : ${this.state.error.alert}`}</div> :
+                            <ul>{
+                                this.classes.map((item) => {
+                                    return <Link to={`class_selection/class/${item.name}`}>{item.name}</Link>
+                                })
+                            }</ul>
                 }
             </div>
         );
