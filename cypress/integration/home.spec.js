@@ -7,10 +7,6 @@ describe("Home page", () => {
         expect(cy.get('button').contains('Home').should('exist'));
     });
 
-    it (`should have a button with the text 'Load Character'`, () => {
-        expect(cy.get('button').contains('Load Character').should('exist'));
-    });
-
     it (`should have a button with the text 'Save Character'`, () => {
         expect(cy.get('button').contains('Save Character').should('exist'));
     });
@@ -91,4 +87,33 @@ describe("Home page", () => {
                 cy.url().should('eq', 'http://localhost:3000/class_selection')
             })
     });
+
+    it (`should navigate to the url '/alignments' when the user clicks the Choose Race button`, () => {
+        return cy.get('button').contains('Class').click()
+            .then(() => {
+                cy.url().should('eq', 'http://localhost:3000/alignments')
+            })
+    });
 });
+
+describe("Alignment Page", () => {
+    beforeEach(() => {
+        cy.visit ('http://localhost:3000/alignments')
+    })
+
+    it('Should display a button for each Alignment', () => {
+        expect(cy.get('ButtonGroup').id.contains('0').should('exist'))
+        expect(cy.get('ButtonGroup').id.contains('1').should('exist'))
+        expect(cy.get('ButtonGroup').id.contains('2').should('exist'))
+        expect(cy.get('ButtonGroup').id.contains('3').should('exist'))
+        expect(cy.get('ButtonGroup').id.contains('4').should('exist'))
+        expect(cy.get('ButtonGroup').id.contains('5').should('exist'))
+        expect(cy.get('ButtonGroup').id.contains('6').should('exist'))
+        expect(cy.get('ButtonGroup').id.contains('7').should('exist'))
+        expect(cy.get('ButtonGroup').id.contains('8').should('exist'))
+    })
+
+    it('Each Alignment should have a description', () => {
+        expect(cy.get('Alignment').contains('Description').should('exist'))
+    })
+})
