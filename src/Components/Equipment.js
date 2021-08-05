@@ -12,7 +12,7 @@ class Equipment extends React.Component {
         return (
             <div>
                 <Link to={{
-                    pathname: "/equipment_categories/equipment/equipment_details",
+                    pathname: "/equipment_details",
                     state: { equipmentArray: equipmentArray }
                 }}>
                     {this.props.equipmentName}

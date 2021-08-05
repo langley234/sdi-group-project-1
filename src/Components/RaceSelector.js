@@ -52,7 +52,7 @@ class RaceSelector extends React.Component
                     <ul>
                     {           
                         this.state.raceArray.map((resultsEntry, index) => {
-                            return (<RaceItem resultsEntry={resultsEntry} key={index} handleRaceSelection={this.props.handleRaceSelection}>This should be a list of Races</RaceItem>)
+                            return (<RaceItem resultsEntry={resultsEntry} key={index} handleRaceSelection={this.props.handleRaceSelection} traitsAssigned={this.props.traitsAssigned}>This should be a list of Races</RaceItem>)
                         })
                     }
                     </ul>

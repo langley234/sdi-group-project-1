@@ -1,15 +1,12 @@
 import React from 'react'
 import NavBar from './NavBar';
 import { Link } from 'react-router-dom'
-import ButtonGroup from '@material-ui/core/ButtonGroup'
-import Button from '@material-ui/core/Button'
-import TextField from '@material-ui/core/Textfield'
 import RaceSelector from './RaceSelector';
-import { makeStyles } from '@material-ui/core/styles'
+import { makeStyles, Button, ButtonGroup, TextField, Typography } from '@material-ui/core'
 import Traits from './Traits.js'
 
 const useStyles = makeStyles ({
-    root: {
+    field: {
         background: 'linear-gradient(45deg, #333, #999)',
         border: 0,
         borderRadius: 15,
@@ -20,7 +17,7 @@ const useStyles = makeStyles ({
 
 function ButtonStyled() {
     const classes = useStyles()
-    return <Button className={classes.root}></Button>
+    return <Button className={classes.field}></Button>
 }
 
 class CharacterCreation extends React.Component {
@@ -38,36 +35,68 @@ class CharacterCreation extends React.Component {
             <div>
                 <ButtonStyled />
                 <div><NavBar /></div>
-                <div><h1>CHARACTER CREATION COMPONENT PLACEHOLD TEXT</h1></div>
-                <div><Link to="/icon_selection"><button>Icon</button></Link></div>
+                <Typography variant='h4'>
+                    CHARACTER CREATION COMPONENT PLACEHOLD TEXT
+                </Typography>
+
+                <Link to='/icon_selector'>
+                    <Button variant='contained' color='primary' href='/icon_selection'>Icon</Button>
+                </Link>
+
                 <TextField
                     variant="outlined"
                     color="secondary"
                     label="Character Name"
                 />
-                <div><Link to='/race_selection'><button>Race</button></Link></div>
+
+                <Link to='/race_selection'>
+                    <Button variant='contained' color='primary' href='/race_selection'>Race</Button>
+                </Link>
+
                 <div>Selected Race: {`${this.props.raceSelected.name}`} </div>
-                <div><Link to="/class_selection" chooseClassCallback={this.props.chooseClassCallback}><button>Class</button></Link></div>
-                <div>Selected Class: {`${this.props.classSelected}`} </div>
+                
+                <div><Link to="/class_selection" classSelectedCallback={this.props.classSelectedCallback}><Button variant='contained' color='primary'>Class</Button></Link></div>
+
+                <div>Selected Class: {`${this.props.classSelected.index}`} </div>
+
                 <TextField
                     variant="outlined"
                     color="secondary"
                     label="Level"
                 />
+
                 <Link to='/alignment'>
-                    <div>Alignment</div>
+                    <Button variant='contained' color='primary'>Alignment</Button>
                 </Link>
-                <div>Armor/HP/Speed</div>
-                <Link to='/equipment_categories'>
-                    <button>Equipment</button>
-                </Link>
-                <div>Proficiencies/Languages</div>
-                <div>Abilities</div>
-                <div>Treasure/Inventory</div>
-                <div>Skills</div>
-                <div>Features/Traits:</div>
+                
+                <p>Selected Alignment: {this.props.alignmentSelected}</p>
+                
+                <Typography variant='h5'>
+                    Armor/HP/Speed
+                </Typography>
+                
+                <Link to="/equipment_categories"><Button variant='contained' color='primary'>Equipment</Button></Link>
+                
+                <Link to="/proficiencies"><Button variant='contained' color='primary'>Proficiencies/Languages</Button></Link>
+                
+                <Typography variant='h5'>
+                    Abilities
+                </Typography>
+
+                <Typography variant='h5'>
+                    Treasure/Inventory
+                </Typography>
+
+                <Typography variant='h5'>
+                    Skills
+                </Typography>
+
+                <Typography variant='h5'>
+                    Features/Traits:
+                </Typography>
+
                 <div>
-                    <Traits raceSelected={this.props.raceSelected}/>
+                    <Traits raceSelected={this.props.raceSelected} traitsAssigned={this.props.traitsAssigned}/>
                 </div>
             </div>
         );

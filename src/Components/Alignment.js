@@ -34,7 +34,9 @@ class Alignment extends React.Component {
                 <ul>
                 {this.state.alignmentData.map(data => {
                     return <li>
-                        <button>{data.name}</button>
+                        <Link to='/'>
+                            <button id={data.name} onClick={this.props.changeAlignment}>{data.name}</button>
+                        </Link>
                         <p>{data.desc}</p>
                     </li>
                 })}

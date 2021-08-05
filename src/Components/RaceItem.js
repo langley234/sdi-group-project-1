@@ -1,8 +1,10 @@
 import React from 'react';
+import {Link} from 'react-router-dom'
 
-function RaceItem ({resultsEntry, key, handleRaceSelection}){
+function RaceItem ({resultsEntry, key, handleRaceSelection, traitsAssigned}){
     // let raceName = resultsEntry.name;
     //console.log("name: ", resultsEntry.name)
+
 
 
 
@@ -10,9 +12,11 @@ function RaceItem ({resultsEntry, key, handleRaceSelection}){
         <div>
             <li>
                 {resultsEntry.name}
-                <button onClick={() => handleRaceSelection(resultsEntry)}>
+                <Link to='/'>
+                    <button onClick={() => handleRaceSelection(resultsEntry)}>
                     {resultsEntry.name}
-                </button>
+                    </button>
+                </Link>
             </li>
         </div>
     );

@@ -23,7 +23,7 @@ class ClassSelector extends React.Component
     // ******************************************************* CALLBACKS ****************************************** //
     handleClassSelected(data){
         console.log('data ', data);
-        this.props.handleClassSelection(data);
+        this.props.handleSelection(data);
     }
     // *****************************************************END CALLBACKS ***************************************** //
 
@@ -70,8 +70,7 @@ class ClassSelector extends React.Component
                 }
             )
     }
-//{/* <Link to={`class_selection/class/${item.index}`}>{item.name}</Link> */}
-//<Link to={{pathname:"/", state: {fromDashboard: true }}}></Link>
+
     render() {
         return (
             <div>
@@ -82,8 +81,8 @@ class ClassSelector extends React.Component
                             <div>{`Something bad happened : ${this.state.error.alert}`}</div> :
                             <ul>{
                                 this.classes.map((item) => {
-                                    return <li><Link to={{pathname:`class_selection/class/${item.index}`, clickCallback: this.props.handleSelection}}>{item.name}</Link>
-                                    <Link to="/"><button onClick={this.props.handleClassSelection}>Choose</button></Link>
+                                    return <li><Link to={{pathname:`class_selection/class/${item.index}`}}>{item.name}</Link>
+                                    <Link to={{pathname:`/`, selectedClass: item.name}}><button onClick={ (e) => { return this.handleClassSelected(item) }}>Choose</button></Link>
                                     </li>
                                 })
                             }</ul>

@@ -6,7 +6,9 @@ import {
   Link,
   useRouteMatch,
   useParams,
-  useHistory
+  useHistory,
+  useContext,
+  useState
 } from "react-router-dom";
 import React from 'react';
 import CharacterCreation from './Components/CharacterCreation';
@@ -18,44 +20,77 @@ import Class from './Components/Class';
 import EquipmentCategory from './Components/EquipmentCategory';
 import Equipment from './Components/Equipment';
 import SpellList from './Components/SpellList'
-import { Icon, Button, ButtonGroup, TextField, makeStyles } from '@material-ui/core';
 import EquipmentDetails from './Components/EquipmentDetails';
 import Alignment from './Components/Alignment';
+import Proficiencies from './Proficiencies';
+import { ForumOutlined } from '@material-ui/icons';
 
 
-class App extends React.Component 
-{
-  constructor(props)
-  {
+class App extends React.Component {
+  constructor(props) {
     super(props);
 
-    if (this.props.classSelected !== undefined)
-    {
-      console.log('NAME IN APP ', this.props.classSelected)
-      this.state = {
-        raceSelected: {},
-        classSelected: this.props.classSelected,
-        abilitiesSelected: []
-      }
-    }
     this.state = {
       raceSelected: {},
       classSelected: {},
-      abilitiesSelected: []
+      traitsAssigned: [],
+      abilitiesSelected: [],
+      alignmentSelected: '',
+      classSelectedCallback: function(data) {globalClassSelectedCallback(data)}
     }
+
+
     this.handleRaceSelection = this.handleRaceSelection.bind(this)
     this.chooseClassCallback = this.chooseClassCallback.bind(this)
+    this.handleAlignmentSelection = this.handleAlignmentSelection.bind(this)
+    //globalClassSelectedCallback(null, this.state.classSelectedCallback);
   }
+
+ 
+
+  //****************************************************** HOOKS *******************************************//
+  /*
+  function handleChange() {
+
+    const [class, setClass] = useState(0)
+    const [race, setRace] = useState(0)
+    const [alignment, setAlignment] = useState(0)
+    const [equipment, setEquipment] = useState(0)
+    const [spells, setSpells] = useState(0)
+    const [icon, setIcon] = useState(0)
+  
+    return (
+      
+    )
+  }
+
+  const classContext = createContext(class)
+
+  classInfo () {
+    const class = useContext ()
+    return {class}
+  }
+  */
 
   // ***************************************************** ROUTING  *************************************************** //
 
   // ***************************************************** ENDING  *************************************************** //
   
   // ***************************************************** CALLBACKS *************************************************** //
+
+  handleAlignmentSelection(event) {
+    const id = event.target.id
+    this.setState({ alignmentSelected: id })
+    console.log(id)
+  }
+  
   handleRaceSelection(input) {
 
     this.setState({raceSelected: input})
-    //console.log("What is this????", input)
+    console.log("What is this????", input)
+    fetch(`https://www.dnd5eapi.co${input.url}`)
+    .then(response => response.json())
+    .then(data => console.log("the traits have been pulled"))
     //console.log("this is the race: ", this.state.raceSelected)
   }
 
@@ -64,7 +99,7 @@ class App extends React.Component
     if (typeof data === 'object')
     {
       this.setState({
-        classSelected: data
+        classSelected: data,
       })
     }
     else
@@ -80,9 +115,9 @@ class App extends React.Component
         <Switch>
           {/* <Route exact={true} path='/' component={CharacterCreation}/> */}
         <Route path="/alignment">
-            <Alignment />
+            <Alignment alignmentSelected={this.state.alignmentSelected} changeAlignment={this.handleAlignmentSelection}/>
           </Route>
-        <Route path="/equipment_categories/equipment/equipment_details">
+        <Route path="/equipment_details">
             <EquipmentDetails />
           </Route>
         <Route path="/equipment_categories/equipment">
@@ -95,21 +130,24 @@ class App extends React.Component
             <Classes />
           </Route>
           <Route path="/class_selection">
-            <ClassSelector raceSelected={this.state.classSelected} handleSelection={this.chooseClassCallback}/>
+            <ClassSelector classSelected={this.state.classSelected} handleSelection={this.chooseClassCallback} />
           </Route>
           <Route path="/icon_selection">
             <IconSelector />
           </Route>
+          <Route path="/proficiencies">
+            <Proficiencies raceSelected={this.state.raceSelected}/>
+          </Route>
           <Route path="/race_selection">
-            <RaceSelector raceSelected={this.state.raceSelected} handleRaceSelection={this.handleRaceSelection}/>
+            <RaceSelector raceSelected={this.state.raceSelected} handleRaceSelection={this.handleRaceSelection} traitsAssigned={this.state.traitsAssigned}/>
           </Route>
           <Route path="/spells">
             <Spells />
           </Route>
           <Route path="/">
             <div className="App">
-              <CharacterCreation raceSelected={this.state.raceSelected} classSelected={this.props.classSelected}
-              classSelected={this.state.classSelected} chooseClassCallback={this.chooseClassCallback}
+              <CharacterCreation raceSelected={this.state.raceSelected} classSelectedCallback={this.props.classSelected}
+              classSelected={this.state.classSelected} chooseClassCallback={this.chooseClassCallback} traitsAssigned={this.state.traitsAssigned} alignmentSelected={this.state.alignmentSelected}
               />
             </div>
           </Route>
@@ -154,6 +192,18 @@ function RouteClass() {
   
   let { className } = useParams();
   return <Class name={className}/>
+}
+
+function globalClassSelectedCallback(data, func)
+{
+  if (typeof globalClassSelectedCallback.callback == 'undefined' ){
+    globalClassSelectedCallback = func;
+  }
+
+  console.log(globalClassSelectedCallback.callback);
+  
+  if (data !== null)
+    globalClassSelectedCallback.callback(data);
 }
 
 function RouteSpells() {
