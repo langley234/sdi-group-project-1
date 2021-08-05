@@ -28,7 +28,9 @@ class App extends React.Component
     super(props);
 
     this.state = {
-      raceSelected: {}
+      raceSelected: {},
+      classSelected: {},
+      abilitiesSelected: []
     }
   }
 
