@@ -52,7 +52,9 @@ class CharacterCreation extends React.Component {
                 />
                 <div>Alignment</div>
                 <div>Armor/HP/Speed</div>
-                <div>Equipment</div>
+                <Link to='/equipment_categories'>
+                    <div>Equipment</div>
+                </Link>
                 <div>Proficiencies/Languages</div>
                 <div>Abilities</div>
                 <div>Treasure/Inventory</div>
