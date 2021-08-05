@@ -73,7 +73,7 @@ class ClassSelector extends React.Component
                             <div>{`Something bad happened : ${this.state.error.alert}`}</div> :
                             <ul>{
                                 this.classes.map((item) => {
-                                    return <Link to={`class_selection/class/${item.name}`}>{item.name}</Link>
+                                    return <li><Link to={`class_selection/class/${item.index}`}>{item.name}</Link></li>
                                 })
                             }</ul>
                 }
