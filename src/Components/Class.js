@@ -66,9 +66,8 @@ class Class extends React.Component
 
     handleClick()
     {
-        this.setState({
-            clicked: !this.state.clicked
-        })
+        console.log('working');
+        this.props.clickCallback();
     }
 
     renderProficiencies()
@@ -175,8 +174,9 @@ class Class extends React.Component
 
     render()
     {
+        
         return (
-            <div onClick={this.handleClick}>
+            <div>
                 {
                     this.state.isLoaded ?
                     <div>
@@ -189,7 +189,8 @@ class Class extends React.Component
                         {this.renderSubClasses()}
                         {this.renderSavingThrows()}
                         <button>Back</button>
-                        <button>I Want this Class</button>
+                        {console.log('this name : ', this.state.data.name)}
+                        <Link to={{pathname:"/", classSelected: this.state.data.name }}><button onClick={this.handleClick}>I Want this Class</button></Link>
                     </div> :
                     <div>Loading...</div>
                 }

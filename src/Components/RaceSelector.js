@@ -1,5 +1,6 @@
 import React from 'react';
 import RaceItem from './RaceItem.js';
+import {Link} from  "react-router-dom";
 
 class RaceSelector extends React.Component
 {
@@ -8,12 +9,11 @@ class RaceSelector extends React.Component
         super(props)
         this.state = {
             racesData: {},
-            selectedRace: {},
             raceArray: []
             
         }
 
-        this.handleClick = this.handleClick.bind(this)
+        //this.handleClick = this.handleClick.bind(this)
 
     }
 
@@ -27,12 +27,12 @@ class RaceSelector extends React.Component
         // .then(() => console.log("this should alert ", this.state.raceArray))
     }
 
-    handleClick(input) {
+    // handleClick(input) {
 
-        this.setState({selectedRace: input})
-        console.log("What is this????", input)
-        console.log("this is the race: ", this.state.selectedRace)
-    }
+    //     this.setState({selectedRace: input})
+    //     console.log("What is this????", input)
+    //     console.log("this is the race: ", this.state.selectedRace)
+    // }
 
     // <RaceItem resultsEntry={resultsEntry} key={key}>This should be a list of Races</RaceItem>
 
@@ -48,14 +48,19 @@ class RaceSelector extends React.Component
                 <h1>Select Race Below</h1>
                 
                 <div>
-                    this should be a list of races
+                    Click the race and press back to continue
                     <ul>
                     {           
                         this.state.raceArray.map((resultsEntry, index) => {
-                            return (<RaceItem resultsEntry={resultsEntry} key={index} handleClick={this.handleClick}>This should be a list of Races</RaceItem>)
+                            return (<RaceItem resultsEntry={resultsEntry} key={index} handleRaceSelection={this.props.handleRaceSelection}>This should be a list of Races</RaceItem>)
                         })
                     }
                     </ul>
+                </div>
+                <div>
+                    <Link to="/">
+                    <button>back</button>
+                    </Link>
                 </div>
 
             </div>

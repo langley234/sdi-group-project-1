@@ -18,8 +18,10 @@ import Class from './Components/Class';
 import EquipmentCategory from './Components/EquipmentCategory';
 import Equipment from './Components/Equipment';
 import SpellList from './Components/SpellList'
-import { Icon } from '@material-ui/core';
+import { Icon, Button, ButtonGroup, TextField, makeStyles } from '@material-ui/core';
 import EquipmentDetails from './Components/EquipmentDetails';
+import Alignment from './Components/Alignment';
+
 
 class App extends React.Component 
 {
@@ -27,17 +29,59 @@ class App extends React.Component
   {
     super(props);
 
+    if (this.props.classSelected !== undefined)
+    {
+      console.log('NAME IN APP ', this.props.classSelected)
+      this.state = {
+        raceSelected: {},
+        classSelected: this.props.classSelected,
+        abilitiesSelected: []
+      }
+    }
     this.state = {
       raceSelected: {},
       classSelected: {},
       abilitiesSelected: []
     }
+    this.handleRaceSelection = this.handleRaceSelection.bind(this)
+    this.chooseClassCallback = this.chooseClassCallback.bind(this)
   }
+
+  // ***************************************************** ROUTING  *************************************************** //
+
+  // ***************************************************** ENDING  *************************************************** //
+  
+  // ***************************************************** CALLBACKS *************************************************** //
+  handleRaceSelection(input) {
+
+    this.setState({raceSelected: input})
+    //console.log("What is this????", input)
+    //console.log("this is the race: ", this.state.raceSelected)
+  }
+
+  chooseClassCallback(data) {
+    console.log('working');
+    if (typeof data === 'object')
+    {
+      this.setState({
+        classSelected: data
+      })
+    }
+    else
+    {
+      console.log('Invalid data type passed to chooseClassCallback() in App.js')
+    }
+  }
+  // ***************************************************** END CALLBACKS *************************************************** //
 
   render() {
     return (
       <Router>
         <Switch>
+          {/* <Route exact={true} path='/' component={CharacterCreation}/> */}
+        <Route path="/alignment">
+            <Alignment />
+          </Route>
         <Route path="/equipment_categories/equipment/equipment_details">
             <EquipmentDetails />
           </Route>
@@ -51,20 +95,22 @@ class App extends React.Component
             <Classes />
           </Route>
           <Route path="/class_selection">
-            <ClassSelector />
+            <ClassSelector raceSelected={this.state.classSelected} handleSelection={this.chooseClassCallback}/>
           </Route>
           <Route path="/icon_selection">
             <IconSelector />
           </Route>
           <Route path="/race_selection">
-            <RaceSelector />
+            <RaceSelector raceSelected={this.state.raceSelected} handleRaceSelection={this.handleRaceSelection}/>
           </Route>
           <Route path="/spells">
             <Spells />
           </Route>
           <Route path="/">
             <div className="App">
-              <CharacterCreation />
+              <CharacterCreation raceSelected={this.state.raceSelected} classSelected={this.props.classSelected}
+              classSelected={this.state.classSelected} chooseClassCallback={this.chooseClassCallback}
+              />
             </div>
           </Route>
         </Switch>
@@ -74,9 +120,10 @@ class App extends React.Component
   
 }
 
-function Classes() {
-  let match = useRouteMatch();
+function Classes(props) {
 
+  
+  let match = useRouteMatch();
   return (
     <div>
       <Switch>
@@ -103,6 +150,8 @@ function Spells() {
 }
 
 function RouteClass() {
+  
+  
   let { className } = useParams();
   return <Class name={className}/>
 }

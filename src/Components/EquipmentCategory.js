@@ -45,11 +45,17 @@ class EquipmentCategory extends React.Component {
     render() {
         return (
             <div>
-                <h1>this is equipment</h1>
-                {this.state.equipmentCategoriesData.map(obj => {
-                    // console.log(obj.equipment)
-                    return <Equipment equipmentName={obj.name} equipmentArray={obj.equipment}/>
-                })}
+                <h1>Select an equipment category: </h1>
+                <ul>
+                    {this.state.equipmentCategoriesData.map(obj => {
+                    return <li><Equipment equipmentName={obj.name} equipmentArray={obj.equipment}/></li>
+                    })}
+                </ul>
+                <div>
+                    <Link to="/">
+                    <button>back</button>
+                    </Link>
+                </div>
             </div>
         )
     }

@@ -117,3 +117,27 @@ describe("Alignment Page", () => {
         expect(cy.get('Alignment').contains('Description').should('exist'))
     })
 })
+
+
+describe("Race_Selector page", () => {
+    beforeEach(() => {
+        cy.visit ('http://localhost:3000/race_selector')
+    })
+
+    it('Should display a button for each race', () => {
+
+
+
+        cy.contains("Dragonborn")
+        cy.contains("Dwarf")
+        cy.contains("Elf")
+        cy.contains("Gnome")
+        cy.contains("Half-Elf")
+        cy.contains("Half-Orc")
+        cy.contains("Halfling")
+        cy.contains("Human")
+        cy.contains("Tiefling")
+        cy.contains("Select Race Below")
+
+    })
+})

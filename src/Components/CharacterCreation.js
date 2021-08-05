@@ -6,6 +6,7 @@ import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/Textfield'
 import RaceSelector from './RaceSelector';
 import { makeStyles } from '@material-ui/core/styles'
+import Traits from './Traits.js'
 
 const useStyles = makeStyles ({
     root: {
@@ -32,6 +33,7 @@ class CharacterCreation extends React.Component {
 
     render()
     {
+        console.log('NAME IN CHARACTER CREATIOn : ', this.props.classSelected)
         return (
             <div>
                 <ButtonStyled />
@@ -44,22 +46,29 @@ class CharacterCreation extends React.Component {
                     label="Character Name"
                 />
                 <div><Link to='/race_selection'><button>Race</button></Link></div>
-                <div><Link to="/class_selection"><button>Class</button></Link></div>
+                <div>Selected Race: {`${this.props.raceSelected.name}`} </div>
+                <div><Link to="/class_selection" chooseClassCallback={this.props.chooseClassCallback}><button>Class</button></Link></div>
+                <div>Selected Class: {`${this.props.classSelected}`} </div>
                 <TextField
                     variant="outlined"
                     color="secondary"
                     label="Level"
                 />
-                <div>Alignment</div>
+                <Link to='/alignment'>
+                    <div>Alignment</div>
+                </Link>
                 <div>Armor/HP/Speed</div>
                 <Link to='/equipment_categories'>
-                    <div>Equipment</div>
+                    <button>Equipment</button>
                 </Link>
                 <div>Proficiencies/Languages</div>
                 <div>Abilities</div>
                 <div>Treasure/Inventory</div>
                 <div>Skills</div>
-                <div>Features/Traits</div>
+                <div>Features/Traits:</div>
+                <div>
+                    <Traits raceSelected={this.props.raceSelected}/>
+                </div>
             </div>
         );
     }

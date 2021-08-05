@@ -7,16 +7,29 @@ class EquipmentDetails extends React.Component {
         super(props)
     }
 
-    render() {
+    // componentDidMount() {
+    //     this.props.location.state.equipmentArray.map(array => {
+    //         fetch(`https://www.dnd5eapi.co${array.url}`)
+    //         .then(res => res.json())
+    //         .then(res => console.log(res))
+    //     })
+    // }
 
+    render() {
         const {equipmentArray} = this.props.location.state
 
-        console.log(equipmentArray)
         return (
             <div>
-                {equipmentArray.map(equipmentData => {
-                    return <button>{equipmentData.name}</button>
-                })}
+                <h1>Select your equipment: </h1>
+                <ul>
+                    {equipmentArray.map(equipmentData => {
+                    return (
+                        <li>
+                            <button>{equipmentData.name}</button>
+                        </li>
+                    )
+                    })}
+                </ul>
             </div>
         )
     }
