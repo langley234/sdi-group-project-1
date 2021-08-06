@@ -1,4 +1,4 @@
-import './App.css';
+import "./App.css";
 import {
   BrowserRouter as Router,
   Switch,
@@ -8,45 +8,49 @@ import {
   useParams,
   useHistory,
   useContext,
-  useState
+  useState,
 } from "react-router-dom";
-import React from 'react';
-import CharacterCreation from './Components/CharacterCreation';
-import Navbar from './Components/NavBar'
-import RaceSelector from './Components/RaceSelector';
-import IconSelector from './Components/IconSelector';
-import ClassSelector from './Components/ClassSelector';
-import Class from './Components/Class';
-import EquipmentCategory from './Components/EquipmentCategory';
-import Equipment from './Components/Equipment';
-import SpellList from './Components/SpellList'
-import EquipmentDetails from './Components/EquipmentDetails';
-import Alignment from './Components/Alignment';
-import Proficiencies from './Proficiencies';
-import { ForumOutlined } from '@material-ui/icons';
-
+import React from "react";
+import CharacterCreation from "./Components/CharacterCreation";
+import Navbar from "./Components/NavBar";
+import RaceSelector from "./Components/RaceSelector";
+import IconSelector from "./Components/IconSelector";
+import ClassSelector from "./Components/ClassSelector";
+import Class from "./Components/Class";
+import EquipmentCategory from "./Components/EquipmentCategory";
+import Equipment from "./Components/Equipment";
+import SpellList from "./Components/SpellList";
+import EquipmentDetails from "./Components/EquipmentDetails";
+import Alignment from "./Components/Alignment";
+import Proficiencies from "./Proficiencies";
+import { ForumOutlined } from "@material-ui/icons";
+import StarterEquipment from "./Components/StarterEquipment";
 
 class App extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
+      nameSelected: "",
+      nameSelected2: "",
+      namesArray: [],
       raceSelected: {},
       classSelected: {},
       traitsAssigned: [],
       abilitiesSelected: [],
-      alignmentSelected: '',
-      classSelectedCallback: function(data) {globalClassSelectedCallback(data)}
-    }
+      alignmentSelected: "",
+      classSelectedCallback: function (data) {
+        globalClassSelectedCallback(data);
+      },
+    };
 
-
-    this.handleRaceSelection = this.handleRaceSelection.bind(this)
-    this.chooseClassCallback = this.chooseClassCallback.bind(this)
-    this.handleAlignmentSelection = this.handleAlignmentSelection.bind(this)
+    this.handleRaceSelection = this.handleRaceSelection.bind(this);
+    this.chooseClassCallback = this.chooseClassCallback.bind(this);
+    this.handleAlignmentSelection = this.handleAlignmentSelection.bind(this);
+    this.handleNameChange = this.handleNameChange.bind(this);
+    this.handleNameSubmit = this.handleNameSubmit.bind(this);
     //globalClassSelectedCallback(null, this.state.classSelectedCallback);
   }
-
- 
 
   //****************************************************** HOOKS *******************************************//
   /*
@@ -75,36 +79,44 @@ class App extends React.Component {
   // ***************************************************** ROUTING  *************************************************** //
 
   // ***************************************************** ENDING  *************************************************** //
-  
+
   // ***************************************************** CALLBACKS *************************************************** //
 
-  handleAlignmentSelection(event) {
-    const id = event.target.id
-    this.setState({ alignmentSelected: id })
-    console.log(id)
+  handleNameChange(event) {
+    this.setState({ nameSelected: event.target.value });
   }
-  
-  handleRaceSelection(input) {
 
-    this.setState({raceSelected: input})
-    console.log("What is this????", input)
+  handleNameSubmit(e) {
+    e.preventDefault();
+    const name = this.state.nameSelected;
+    this.setState({ nameSelected: "", nameSelected2: name });
+    console.log(name);
+  }
+
+  handleAlignmentSelection(event) {
+    const id = event.target.id;
+    this.setState({ alignmentSelected: id });
+  }
+
+  handleRaceSelection(input) {
+    this.setState({ raceSelected: input });
+    console.log("What is this????", input);
     fetch(`https://www.dnd5eapi.co${input.url}`)
-    .then(response => response.json())
-    .then(data => console.log("the traits have been pulled"))
+      .then((response) => response.json())
+      .then((data) => console.log("the traits have been pulled"));
     //console.log("this is the race: ", this.state.raceSelected)
   }
 
   chooseClassCallback(data) {
-    console.log('working');
-    if (typeof data === 'object')
-    {
+    console.log("working");
+    if (typeof data === "object") {
       this.setState({
         classSelected: data,
-      })
-    }
-    else
-    {
-      console.log('Invalid data type passed to chooseClassCallback() in App.js')
+      });
+    } else {
+      console.log(
+        "Invalid data type passed to chooseClassCallback() in App.js"
+      );
     }
   }
   // ***************************************************** END CALLBACKS *************************************************** //
@@ -114,40 +126,62 @@ class App extends React.Component {
       <Router>
         <Switch>
           {/* <Route exact={true} path='/' component={CharacterCreation}/> */}
-        <Route path="/alignment">
-            <Alignment alignmentSelected={this.state.alignmentSelected} changeAlignment={this.handleAlignmentSelection}/>
+          <Route path="/starter_equipment">
+            <StarterEquipment classSelected={this.state.classSelected} />
           </Route>
-        <Route path="/equipment_details">
+          <Route path="/alignment">
+            <Alignment
+              alignmentSelected={this.state.alignmentSelected}
+              changeAlignment={this.handleAlignmentSelection}
+            />
+          </Route>
+          <Route path="/equipment_details">
             <EquipmentDetails />
           </Route>
-        <Route path="/equipment_categories/equipment">
+          <Route path="/equipment_categories/equipment">
             <Equipment />
           </Route>
-        <Route path="/equipment_categories">
+          <Route path="/equipment_categories">
             <EquipmentCategory />
           </Route>
           <Route path="/class_selection/class">
             <Classes />
           </Route>
           <Route path="/class_selection">
-            <ClassSelector classSelected={this.state.classSelected} handleSelection={this.chooseClassCallback} />
+            <ClassSelector
+              classSelected={this.state.classSelected}
+              handleSelection={this.chooseClassCallback}
+            />
           </Route>
           <Route path="/icon_selection">
             <IconSelector />
           </Route>
           <Route path="/proficiencies">
-            <Proficiencies raceSelected={this.state.raceSelected}/>
+            <Proficiencies raceSelected={this.state.raceSelected} />
           </Route>
           <Route path="/race_selection">
-            <RaceSelector raceSelected={this.state.raceSelected} handleRaceSelection={this.handleRaceSelection} traitsAssigned={this.state.traitsAssigned}/>
+            <RaceSelector
+              raceSelected={this.state.raceSelected}
+              handleRaceSelection={this.handleRaceSelection}
+              traitsAssigned={this.state.traitsAssigned}
+            />
           </Route>
           <Route path="/spells">
             <Spells />
           </Route>
           <Route path="/">
             <div className="App">
-              <CharacterCreation raceSelected={this.state.raceSelected} classSelectedCallback={this.props.classSelected}
-              classSelected={this.state.classSelected} chooseClassCallback={this.chooseClassCallback} traitsAssigned={this.state.traitsAssigned} alignmentSelected={this.state.alignmentSelected}
+              <CharacterCreation
+                raceSelected={this.state.raceSelected}
+                classSelectedCallback={this.props.classSelected}
+                classSelected={this.state.classSelected}
+                chooseClassCallback={this.chooseClassCallback}
+                traitsAssigned={this.state.traitsAssigned}
+                alignmentSelected={this.state.alignmentSelected}
+                nameSelected={this.state.nameSelected}
+                nameSelected2={this.state.nameSelected2}
+                handleNameChange={this.handleNameChange}
+                handleNameSubmit={this.handleNameSubmit}
               />
             </div>
           </Route>
@@ -155,12 +189,9 @@ class App extends React.Component {
       </Router>
     );
   }
-  
 }
 
 function Classes(props) {
-
-  
   let match = useRouteMatch();
   return (
     <div>
@@ -184,30 +215,26 @@ function Spells() {
         </Route>
       </Switch>
     </div>
-  )
+  );
 }
 
 function RouteClass() {
-  
-  
   let { className } = useParams();
-  return <Class name={className}/>
+  return <Class name={className} />;
 }
 
-function globalClassSelectedCallback(data, func)
-{
-  if (typeof globalClassSelectedCallback.callback == 'undefined' ){
+function globalClassSelectedCallback(data, func) {
+  if (typeof globalClassSelectedCallback.callback == "undefined") {
     globalClassSelectedCallback = func;
   }
 
   console.log(globalClassSelectedCallback.callback);
-  
-  if (data !== null)
-    globalClassSelectedCallback.callback(data);
+
+  if (data !== null) globalClassSelectedCallback.callback(data);
 }
 
 function RouteSpells() {
   let { className } = useParams();
-  return <SpellList name={className}/>
+  return <SpellList name={className} />;
 }
 export default App;
