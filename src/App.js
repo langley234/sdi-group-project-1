@@ -220,7 +220,7 @@ class App extends React.Component {
           </Route>
           <Route path="/choose_proficiencies">
             <Proficiencies 
-              raceSelected={this.state.raceSelected} 
+              raceSelected={this.state.raceSelected.race} 
               doneClickCallback={this.doneChoosingProficienciesAndLanguagesCallback} 
               languagesAlreadyChosen={this.state.languagesSelected} 
               proficienciesAlreadyChosen={this.state.proficienciesSelected} />
