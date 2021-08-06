@@ -1,4 +1,5 @@
 import React from 'react';
+import NavBar from './NavBar'
 import {
     Link
   } from "react-router-dom";
@@ -170,6 +171,7 @@ class Class extends React.Component
         
         return (
             <div>
+                <NavBar/>
                 {
                     this.state.isLoaded ?
                     <div>

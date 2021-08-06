@@ -13,25 +13,40 @@ fetch('http://example.com/movies.json')
 import React from 'react';
 import {Link} from 'react-router-dom'
 
-function RaceItem ({resultsEntry, key, handleRaceSelection, traitsAssigned}){
-    // let raceName = resultsEntry.name;
-    //console.log("name: ", resultsEntry.name)
 
-
-
-
+function RaceTraits ({name}){
+console.log(name)
     return (
         <div>
             <li>
-                {resultsEntry.name}
-                <Link to='/'>
-                    <button onClick={() => handleRaceSelection(resultsEntry)}>
-                    {resultsEntry.name}
-                    </button>
-                </Link>
+            {name}
             </li>
         </div>
     );
 }
 
-export default RaceItem
+export default RaceTraits
+
+this.setState({traitsAssigned: data.traits})
+
+.then(data => this.setState({traitsAssigned: data.traits}))
+
+            <div>
+                The list of traits
+                <ul>
+                    <li>{this.props.traitsAssigned[0].name}</li>
+                    <li>{this.props.traitsAssigned[1].name}</li>
+                    <li>{this.props.traitsAssigned[2].name}</li>
+                    <li>{this.props.traitsAssigned[3].name}</li>
+                    <li>{this.props.traitsAssigned[4].name}</li>
+                </ul>
+            </div>
+
+
+    //console.log("name: ", resultsEntry.name)
+
+                {           
+                        traitsAssigned.map((traits, index) => {
+                            return (<li>{traits[index].name}</li>)
+                        })
+                }

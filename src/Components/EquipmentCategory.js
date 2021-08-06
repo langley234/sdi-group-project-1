@@ -1,4 +1,5 @@
 import React from 'react'
+import NavBar from './NavBar'
 import {Link} from 'react-router-dom'
 import Equipment from './Equipment'
 import { withRouter } from "react-router-dom";
@@ -45,6 +46,7 @@ class EquipmentCategory extends React.Component {
     render() {
         return (
             <div>
+                <NavBar/>
                 <h1>Select an equipment category: </h1>
                 <ul>
                     {this.state.equipmentCategoriesData.map(obj => {

@@ -1,4 +1,5 @@
 import React from 'react'
+import NavBar from './NavBar'
 import {Link} from 'react-router-dom'
 import { withRouter } from "react-router-dom";
 
@@ -20,6 +21,7 @@ class EquipmentDetails extends React.Component {
 
         return (
             <div>
+                <NavBar/>
                 <h1>Select your equipment: </h1>
                 <ul>
                     {equipmentArray.map(equipmentData => {

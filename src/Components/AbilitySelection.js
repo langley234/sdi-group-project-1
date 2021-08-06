@@ -1,4 +1,5 @@
 import React from 'react';
+import NavBar from './NavBar';
 import { Link } from "react-router-dom";
 
 class AbilitySelection extends React.Component
@@ -48,7 +49,8 @@ class AbilitySelection extends React.Component
     render()
     {
         return (
-            <div>       
+            <div>
+                <NavBar /> 
                     <h2>{`Strength : ${this.state.strength}`}</h2>
                     <h2>{`Dexterity : ${this.state.dexterity}`}</h2>
                     <h2>{`Constitution : ${this.state.constitution}`}</h2>

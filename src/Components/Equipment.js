@@ -1,4 +1,5 @@
 import React from 'react'
+import NavBar from './NavBar'
 import {Link} from 'react-router-dom'
 
 class Equipment extends React.Component {

@@ -1,4 +1,5 @@
 import React from 'react';
+import NavBar from './NavBar'
 
 class IconSelector extends React.Component
 {
@@ -11,6 +12,7 @@ class IconSelector extends React.Component
     {
         return (
             <div>
+                <NavBar/>
                 <h1>ICON SELECTOR COMPONENT PLACEHOLDER TEXT</h1>
             </div>
         );

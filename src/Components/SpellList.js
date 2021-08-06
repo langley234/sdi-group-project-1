@@ -1,4 +1,5 @@
 import React from 'react';
+import NavBar from './NavBar'
 
 class SpellList extends React.Component
 {
@@ -68,6 +69,7 @@ class SpellList extends React.Component
     {
         return (
             <div>
+                <NavBar/>
                 {
                     this.state.isLoaded ?
                             <div>

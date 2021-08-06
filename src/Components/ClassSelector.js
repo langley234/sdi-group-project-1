@@ -1,5 +1,6 @@
 import React from 'react';
 import Class from './Class';
+import NavBar from './NavBar'
 import { Link } from "react-router-dom";
 import '../classSelector.css';
 
@@ -7,7 +8,7 @@ class ClassSelector extends React.Component
 {
     constructor(props)
     {
-        super(props);
+        super(props)
 
         this.state = {
             isLoaded: false,
@@ -77,8 +78,16 @@ class ClassSelector extends React.Component
         return (
             <div className="all-class-choices">{
                 this.classes.map((item) => {
-                    return <div className="classChoice"><Link to={{ pathname: `class_selection/${item.index}` }}>{item.name}</Link>
-                        <Link to={{ pathname: `/`, selectedClass: item.name }}><button onClick={(e) => { return this.handleClassSelected(item) }}>Choose</button></Link>
+                    return <div 
+                            className="classChoice">
+                            <p className="class-name-text">{item.name}</p>
+                            <img src="" alt="" ></img>
+                            <Link to={{ pathname: `class_selection/${item.index}` }}><p className="class-more-info-text">More Info</p></Link>
+                            <Link to={{ pathname: `/`, selectedClass: item.name }}>
+                                <button className="button_slide slide_left" 
+                                        onClick={(e) => { return this.handleClassSelected(item) }}>Select
+                                </button>
+                            </Link>
                     </div>
                 })
             }</div>
@@ -88,6 +97,7 @@ class ClassSelector extends React.Component
     render() {
         return (
             <div>
+                <NavBar/>
                 {
                     !this.state.isLoaded ?
                         <h1>Loading</h1> :

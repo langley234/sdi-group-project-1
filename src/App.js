@@ -1,4 +1,5 @@
 import './App.css';
+import { withRouter } from "react-router";
 import {
   BrowserRouter as Router,
   Switch,
@@ -27,12 +28,19 @@ import { ForumOutlined } from '@material-ui/icons';
 import ProficiencyOption from './ProficiencyOption';
 import Language from './Language';
 import AbilitySelection from './Components/AbilitySelection';
+import StarterEquipment from "./Components/StarterEquipment";
+import EquipmentList from './Components/EquipmentList';
+import EquipmentItem from './Components/EquipmentItem';
 
 class App extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
+      nameSelected: "",
+      nameSelected2: "",
+      levelSelected: "",
+      levelSelected2: "",
       raceSelected: {},
       classSelected: {},
       languagesSelected: [],
@@ -41,14 +49,22 @@ class App extends React.Component {
       abilitiesSelected: [],
       alignmentSelected: '',
       abilities: {},
+      inventory: [],
       classSelectedCallback: function(data) {globalClassSelectedCallback(data)}
     }
+
+    this.inventory = [];
 
     this.handleRaceSelection = this.handleRaceSelection.bind(this)
     this.chooseClassCallback = this.chooseClassCallback.bind(this)
     this.handleAlignmentSelection = this.handleAlignmentSelection.bind(this)
     this.doneChoosingProficienciesAndLanguagesCallback = this.doneChoosingProficienciesAndLanguagesCallback.bind(this);
     this.doneChoosingAbilitiesCallback = this.doneChoosingAbilitiesCallback.bind(this);
+    this.handleNameChange = this.handleNameChange.bind(this);
+    this.handleNameSubmit = this.handleNameSubmit.bind(this);
+    this.handleLevelChange = this.handleLevelChange.bind(this);
+    this.handleLevelSubmit = this.handleLevelSubmit.bind(this);
+    this.addToInventory = this.addToInventory.bind(this);
     //globalClassSelectedCallback(null, this.state.classSelectedCallback);
   }
 
@@ -84,6 +100,26 @@ class App extends React.Component {
   
   // ***************************************************** CALLBACKS *************************************************** //
 
+  handleNameChange(event) {
+    this.setState({ nameSelected: event.target.value });
+  }
+
+  handleNameSubmit(e) {
+    e.preventDefault();
+    const name = this.state.nameSelected;
+    this.setState({ nameSelected: "", nameSelected2: name });
+  }
+
+  handleLevelChange(event) {
+    this.setState({ levelSelected: event.target.value });
+  }
+
+  handleLevelSubmit(e) {
+    e.preventDefault();
+    const level = this.state.levelSelected;
+    this.setState({ levelSelected: "", levelSelected2: level });
+  }
+
   handleAlignmentSelection(event) {
     const id = event.target.id
     this.setState({ alignmentSelected: id })
@@ -93,11 +129,8 @@ class App extends React.Component {
   handleRaceSelection(input) {
 
     this.setState({raceSelected: input})
-    console.log("What is this????", input)
-    fetch(`https://www.dnd5eapi.co${input.url}`)
-    .then(response => response.json())
-    .then(data => console.log("the traits have been pulled"))
-    //console.log("this is the race: ", this.state.raceSelected)
+    console.log("Race you have selected ", input, " race")
+    console.log("raceSelected is: ", this.state.raceSelected)
   }
 
   doneChoosingProficienciesAndLanguagesCallback(data)
@@ -129,6 +162,15 @@ class App extends React.Component {
       abilities: data
     })
   }
+
+  addToInventory(data) {
+    console.log('data in app ', data);
+    this.inventory.push(data);
+
+    this.setState({
+      inventory: this.inventory
+    })
+  }
   // ***************************************************** END CALLBACKS *************************************************** //
 
   
@@ -137,6 +179,9 @@ class App extends React.Component {
       <Router>
         <Switch>
           {/* <Route exact={true} path='/' component={CharacterCreation}/> */}
+          <Route path="/starter_equipment">
+            <StarterEquipment classSelected={this.state.classSelected} />
+          </Route>
           <Route path="/alignment">
             <Alignment alignmentSelected={this.state.alignmentSelected} changeAlignment={this.handleAlignmentSelection} />
           </Route>
@@ -148,6 +193,12 @@ class App extends React.Component {
           </Route>
           <Route path="/equipment_categories">
             <EquipmentCategory />
+          </Route>
+          <Route path="/equipment/:equipmentIndex">
+            <EquipmentItem selectCallback={this.addToInventory}/>
+          </Route>
+          <Route path="/equipment">
+            <EquipmentList />
           </Route>
           <Route path="/languages/:languageIndex">
               <RouteLanguage />
@@ -192,6 +243,15 @@ class App extends React.Component {
                 languagesSelected={this.state.languagesSelected}
                 proficienciesSelected={this.state.proficienciesSelected}
                 abilities={this.state.abilities}
+                handleNameChange={this.handleNameChange}
+                handleNameSubmit={this.handleNameSubmit}
+                nameSelected={this.state.nameSelected}
+                nameSelected2={this.state.nameSelected2}
+                handleLevelChange={this.handleLevelChange}
+                handleLevelSubmit={this.handleLevelSubmit}
+                levelSelected={this.state.levelSelected}
+                levelSelected2={this.state.levelSelected2}
+                inventory={this.state.inventory}
               />
             </div>
           </Route>
@@ -243,6 +303,11 @@ function RouteProficiency() {
 function RouteClass() {
   let { className } = useParams();
   return <Class name={className}/>
+}
+
+function RouteEquipmentItem() {
+  let { equipmentIndex } = useParams();
+  return <EquipmentItem equipmentIndex={equipmentIndex} />
 }
 
 function globalClassSelectedCallback(data, func)
