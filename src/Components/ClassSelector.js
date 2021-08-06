@@ -1,8 +1,7 @@
 import React from 'react';
 import Class from './Class';
-import {
-    Link,
-  } from "react-router-dom";
+import { Link } from "react-router-dom";
+import '../classSelector.css';
 
 class ClassSelector extends React.Component
 {
@@ -17,6 +16,8 @@ class ClassSelector extends React.Component
         }
 
         this.handleClassSelected = this.handleClassSelected.bind(this);
+        this.renderClassChoices = this.renderClassChoices.bind(this);
+
         this.classes = [];
     }
 
@@ -71,6 +72,19 @@ class ClassSelector extends React.Component
             )
     }
 
+    renderClassChoices()
+    {
+        return (
+            <div className="all-class-choices">{
+                this.classes.map((item) => {
+                    return <div className="classChoice"><Link to={{ pathname: `class_selection/${item.index}` }}>{item.name}</Link>
+                        <Link to={{ pathname: `/`, selectedClass: item.name }}><button onClick={(e) => { return this.handleClassSelected(item) }}>Choose</button></Link>
+                    </div>
+                })
+            }</div>
+        );
+    }
+
     render() {
         return (
             <div>
@@ -79,13 +93,7 @@ class ClassSelector extends React.Component
                         <h1>Loading</h1> :
                         this.state.error.status ?
                             <div>{`Something bad happened : ${this.state.error.alert}`}</div> :
-                            <ul>{
-                                this.classes.map((item) => {
-                                    return <li><Link to={{pathname:`class_selection/${item.index}`}}>{item.name}</Link>
-                                    <Link to={{pathname:`/`, selectedClass: item.name}}><button onClick={ (e) => { return this.handleClassSelected(item) }}>Choose</button></Link>
-                                    </li>
-                                })
-                            }</ul>
+                            this.renderClassChoices()
                 }
             </div>
         );

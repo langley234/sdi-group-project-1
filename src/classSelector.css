@@ -1,0 +1,8 @@
+.classChoice {
+    display: flex;
+    flex-direction: column;
+}
+
+.all-class-choices {
+    display: flex;
+}
