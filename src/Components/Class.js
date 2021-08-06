@@ -25,8 +25,7 @@ class Class extends React.Component
                 error: {alert: '', status: false}
             }
         }
-        
-        this.handleClick = this.handleClick.bind(this);
+
         this.renderProficiencies = this.renderProficiencies.bind(this);
         this.renderStartingEquipment = this.renderStartingEquipment.bind(this);
         this.renderProficiencyChoices = this.renderProficiencyChoices.bind(this);
@@ -62,12 +61,6 @@ class Class extends React.Component
                     }
                 )
         }
-    }
-
-    handleClick()
-    {
-        console.log('working');
-        this.props.clickCallback();
     }
 
     renderProficiencies()
@@ -188,9 +181,7 @@ class Class extends React.Component
                         {this.renderStartingEquipment()}
                         {this.renderSubClasses()}
                         {this.renderSavingThrows()}
-                        <button>Back</button>
-                        {console.log('this name : ', this.state.data.name)}
-                        <Link to={{pathname:"/", classSelected: this.state.data.name }}><button onClick={this.handleClick}>I Want this Class</button></Link>
+                        <Link to="/class_selection"><button>Back</button></Link>
                     </div> :
                     <div>Loading...</div>
                 }

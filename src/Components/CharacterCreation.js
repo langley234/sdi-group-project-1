@@ -24,9 +24,71 @@ class CharacterCreation extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-
+            languagesSelected: this.props.languagesSelected,
+            proficienciesSelected: this.props.proficienciesSelected,
+            abilities: this.props.abilities
         }
+
+        this.renderLanguagesChosen = this.renderLanguagesChosen.bind(this);
+        this.renderProficienciesChosen = this.renderProficienciesChosen.bind(this);
+        this.renderAbilityScores = this.renderAbilityScores.bind(this);
     }
+
+    
+
+    // ***************************************************** RENDER FUNCTIONS *************************************************** //
+    renderLanguagesChosen() {
+        return (
+            <ul><h3>Current Chosen Languages</h3>
+                {this.state.languagesSelected.map((item) => {
+                    return <li><h4>{item.name}</h4></li>
+                })}
+            </ul>
+        );
+    }
+
+    renderProficienciesChosen() {
+        return (
+            <ul><h3>Current Chosen Proficiencies</h3>
+                {this.state.proficienciesSelected.map((item) => {
+                    return <li><h4>{item.name}</h4></li>
+                })}
+            </ul>
+        );
+    }
+
+    renderAbilityScores() {
+        let helperRender = () =>
+        {
+            console.log('ABILITIES ', this.state.abilities);
+            let arr = [];
+
+            for (let key in this.state.abilities)
+            {
+                arr.push({name: key, value: this.state.abilities[key]})
+            }
+
+            return (
+                <div>
+                    {
+                        arr.length > 0 ?
+                        <ul>{arr.map((item) => {
+                            return <li>{`${item.name} : ${item.value}`}</li>
+                        })}</ul> :
+                        <div>No Ability Scores Yet</div>
+                    }
+                    
+                </div>
+            );
+        }
+
+        return (
+            <ul><h3>Current Ability Scores</h3>
+                {helperRender()}
+            </ul>
+        );
+    }
+  // ***************************************************** END RENDER FUNCTIONS *************************************************** //
 
     render()
     {
@@ -77,12 +139,14 @@ class CharacterCreation extends React.Component {
                 
                 <Link to="/equipment_categories"><Button variant='contained' color='primary'>Equipment</Button></Link>
                 
-                <Link to="/proficiencies"><Button variant='contained' color='primary'>Proficiencies/Languages</Button></Link>
+                <Link to="/choose_proficiencies"><Button variant='contained' color='primary'>Proficiencies/Languages</Button></Link>
+                {this.renderLanguagesChosen()}
+                {this.renderProficienciesChosen()}    
                 
                 <Typography variant='h5'>
-                    Abilities
+                    <Link to="/ability_selection">Ability Selection</Link>
                 </Typography>
-
+                {this.renderAbilityScores()}
                 <Typography variant='h5'>
                     Treasure/Inventory
                 </Typography>

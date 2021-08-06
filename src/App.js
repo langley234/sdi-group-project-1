@@ -24,7 +24,9 @@ import EquipmentDetails from './Components/EquipmentDetails';
 import Alignment from './Components/Alignment';
 import Proficiencies from './Proficiencies';
 import { ForumOutlined } from '@material-ui/icons';
-
+import ProficiencyOption from './ProficiencyOption';
+import Language from './Language';
+import AbilitySelection from './Components/AbilitySelection';
 
 class App extends React.Component {
   constructor(props) {
@@ -33,16 +35,20 @@ class App extends React.Component {
     this.state = {
       raceSelected: {},
       classSelected: {},
+      languagesSelected: [],
+      proficienciesSelected: [],
       traitsAssigned: [],
       abilitiesSelected: [],
       alignmentSelected: '',
+      abilities: {},
       classSelectedCallback: function(data) {globalClassSelectedCallback(data)}
     }
-
 
     this.handleRaceSelection = this.handleRaceSelection.bind(this)
     this.chooseClassCallback = this.chooseClassCallback.bind(this)
     this.handleAlignmentSelection = this.handleAlignmentSelection.bind(this)
+    this.doneChoosingProficienciesAndLanguagesCallback = this.doneChoosingProficienciesAndLanguagesCallback.bind(this);
+    this.doneChoosingAbilitiesCallback = this.doneChoosingAbilitiesCallback.bind(this);
     //globalClassSelectedCallback(null, this.state.classSelectedCallback);
   }
 
@@ -94,6 +100,15 @@ class App extends React.Component {
     //console.log("this is the race: ", this.state.raceSelected)
   }
 
+  doneChoosingProficienciesAndLanguagesCallback(data)
+  {
+    console.log('data', data);
+    this.setState({
+      languagesSelected: data.languages,
+      proficienciesSelected: data.proficiencies
+    })
+  }
+
   chooseClassCallback(data) {
     console.log('working');
     if (typeof data === 'object')
@@ -107,27 +122,38 @@ class App extends React.Component {
       console.log('Invalid data type passed to chooseClassCallback() in App.js')
     }
   }
+
+  doneChoosingAbilitiesCallback(data) {
+    console.log('data', data);
+    this.setState({
+      abilities: data
+    })
+  }
   // ***************************************************** END CALLBACKS *************************************************** //
 
+  
   render() {
     return (
       <Router>
         <Switch>
           {/* <Route exact={true} path='/' component={CharacterCreation}/> */}
-        <Route path="/alignment">
-            <Alignment alignmentSelected={this.state.alignmentSelected} changeAlignment={this.handleAlignmentSelection}/>
+          <Route path="/alignment">
+            <Alignment alignmentSelected={this.state.alignmentSelected} changeAlignment={this.handleAlignmentSelection} />
           </Route>
-        <Route path="/equipment_details">
+          <Route path="/equipment_details">
             <EquipmentDetails />
           </Route>
-        <Route path="/equipment_categories/equipment">
+          <Route path="/equipment_categories/equipment">
             <Equipment />
           </Route>
-        <Route path="/equipment_categories">
+          <Route path="/equipment_categories">
             <EquipmentCategory />
           </Route>
-          <Route path="/class_selection/class">
-            <Classes />
+          <Route path="/languages/:languageIndex">
+              <RouteLanguage />
+          </Route>
+          <Route path="/class_selection/:className">
+            <RouteClass />
           </Route>
           <Route path="/class_selection">
             <ClassSelector classSelected={this.state.classSelected} handleSelection={this.chooseClassCallback} />
@@ -135,19 +161,37 @@ class App extends React.Component {
           <Route path="/icon_selection">
             <IconSelector />
           </Route>
+          <Route path="/ability_selection">
+            <AbilitySelection doneCallback={this.doneChoosingAbilitiesCallback} />
+          </Route>
           <Route path="/proficiencies">
-            <Proficiencies raceSelected={this.state.raceSelected}/>
+            <ProficiencyRoute />
+          </Route>
+          <Route path="/choose_proficiencies">
+            <Proficiencies 
+              raceSelected={this.state.raceSelected} 
+              doneClickCallback={this.doneChoosingProficienciesAndLanguagesCallback} 
+              languagesAlreadyChosen={this.state.languagesSelected} 
+              proficienciesAlreadyChosen={this.state.proficienciesSelected} />
           </Route>
           <Route path="/race_selection">
-            <RaceSelector raceSelected={this.state.raceSelected} handleRaceSelection={this.handleRaceSelection} traitsAssigned={this.state.traitsAssigned}/>
+            <RaceSelector raceSelected={this.state.raceSelected} handleRaceSelection={this.handleRaceSelection} traitsAssigned={this.state.traitsAssigned} />
           </Route>
           <Route path="/spells">
             <Spells />
           </Route>
           <Route path="/">
             <div className="App">
-              <CharacterCreation raceSelected={this.state.raceSelected} classSelectedCallback={this.props.classSelected}
-              classSelected={this.state.classSelected} chooseClassCallback={this.chooseClassCallback} traitsAssigned={this.state.traitsAssigned} alignmentSelected={this.state.alignmentSelected}
+              <CharacterCreation 
+                raceSelected={this.state.raceSelected} 
+                classSelectedCallback={this.props.classSelected}
+                classSelected={this.state.classSelected} 
+                chooseClassCallback={this.chooseClassCallback} 
+                traitsAssigned={this.state.traitsAssigned} 
+                alignmentSelected={this.state.alignmentSelected}
+                languagesSelected={this.state.languagesSelected}
+                proficienciesSelected={this.state.proficienciesSelected}
+                abilities={this.state.abilities}
               />
             </div>
           </Route>
@@ -158,15 +202,19 @@ class App extends React.Component {
   
 }
 
-function Classes(props) {
+function RouteLanguage()
+{
+  let { languageIndex } = useParams();
+  return <Language index={languageIndex}/>
+}
 
-  
+function ProficiencyRoute() {
   let match = useRouteMatch();
-  return (
+  return(
     <div>
       <Switch>
-        <Route path={`${match.path}/:className`}>
-          <RouteClass />
+        <Route path={`${match.path}/:proficiencyIndex`}>
+          <RouteProficiency />
         </Route>
       </Switch>
     </div>
@@ -187,9 +235,12 @@ function Spells() {
   )
 }
 
+function RouteProficiency() {
+  let { proficiencyIndex } = useParams();
+  return <ProficiencyOption index={proficiencyIndex}/>
+}
+
 function RouteClass() {
-  
-  
   let { className } = useParams();
   return <Class name={className}/>
 }

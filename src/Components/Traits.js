@@ -7,26 +7,55 @@ class Traits extends React.Component{
     this.raceData = props.raceSelected;
     this.name = this.raceData.name
     this.traitsData = [];
+
+    this.state = {
+        isLoaded: false
+    }
     }
     
-
+    // componentDidMount() {
+    //     // if (this.props.selectedRace !== undefined)
+    //     fetch("https://api.example.com/items")
+    //         .then(res => res.json())
+    //         .then(
+    //             (result) => {
+    //                 this.setState({
+    //                     isLoaded: true,
+    //                     data: result
+    //                 });
+    //             },
+    //             (error) => {
+    //                 this.setState({
+    //                     isLoaded: true,
+    //                     error: true
+    //                 });
+    //             }
+    //         )
+    //     // else { return an error message to select a race}
+    // }
     
-
-
     render()
     {
         return (
-            <div>
-                {this.name} Traits:
-                {/* <ul>
-                    {
-                        this.props.traitsAssigned.map((entry) => {
-                            return <li>{entry.name}</li>
-                        })
+            
+        //         <div>
+        //             {
+        //                 this.state.isLoaded ?
+        //                 <div>Finished Loading</div> :
+        //                 <div>Loading</div>
+        //             }
+        //             {this.name} Traits:
+        // {/* <ul>
+        //             {
+        //                 this.props.traitsAssigned.map((entry) => {
+        //                     return <li>{entry.name}</li>
+        //                 })
 
-                    }
-                </ul> */}
-            </div>
+        //             }
+        //         </ul> */}
+            // </div >
+            <div></div>
+            
         );
     }
     
